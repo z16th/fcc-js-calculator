@@ -89,20 +89,43 @@ const buttons = [
   },
 ]
 
+function postfix(str){
+  const operatorRegex = /[*+/-]/
+  const numberRegex = /(\d+?\.\d+|\d+)/
+  let numbers = []
+  let operators = []
+  numbers = str.split(operatorRegex)
+  operators = str.split(numberRegex).filter(i=> i !== '').filter(i => !numbers.includes(i))
+  console.log(numbers)
+  console.log(operators)
+}
+
 function App() {
   const [ display, setDisplay ] = React.useState('0')
+  const [ allowDecimal, setAllowDecimal ] = React.useState(true)
 
   function handleClick(value){
     if( value === '0' && display === '0') return
+    switch(value){
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+      case 'C':
+      case '=':
+      setAllowDecimal(true)
+    }
     switch(value){
       case 'C':
         setDisplay('0')
       break;
       case '=':
-        setDisplay('Calculating')
+        postfix(display)  
+      // setDisplay('Calculating')
       break;
       case '.':
-        if(display.slice(-1) === '.') return
+        if(display.slice(-1) === '.' || !allowDecimal) return
+        setAllowDecimal(false)
       //fall
       default:
         if(display === '0' && value !== '.') setDisplay(value)
