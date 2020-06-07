@@ -90,14 +90,10 @@ const buttons = [
 ]
 
 function postfix(str){
-  const operatorRegex = /[*+/-]/
-  const numberRegex = /(\d+?\.\d+|\d+)/
-  let numbers = []
-  let operators = []
-  numbers = str.split(operatorRegex)
-  operators = str.split(numberRegex).filter(i=> i !== '').filter(i => !numbers.includes(i))
-  console.log(numbers)
-  console.log(operators)
+  const operatorRegex = /([+*/]|(?<![+*/])-)/
+  let inputs = []
+  inputs = str.split(operatorRegex)
+  console.log(`Numbers: ${inputs}`)
 }
 
 function App() {
