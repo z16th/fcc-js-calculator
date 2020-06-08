@@ -89,7 +89,7 @@ const buttons = [
   },
 ]
 
-function postfix(str){
+function toPostfix(str){
   const operatorRegex = /([+*/]|(?<![+*/])-)/
   let inputs = []
   inputs = str.split(operatorRegex)
@@ -99,26 +99,30 @@ function postfix(str){
 function App() {
   const [ display, setDisplay ] = React.useState('0')
   const [ allowDecimal, setAllowDecimal ] = React.useState(true)
+  const [ allowOperator, setAllowOperator ] = React.useState(true)
 
   function handleClick(value){
-    if( value === '0' && display === '0') return
+    if( value === '0' && display === '0' ) return
+    if( value.match(/[+\-*/C=]/) ) setAllowDecimal(true)
+    if( value.match(/[0-9.]/) ) setAllowOperator(true)
+    if( value.match(/[+*/]/) && display[display.length-1].match(/[+*/-]/) ) return setDisplay(display.slice(0,-1) + value)
     switch(value){
       case '+':
-      case '-':
       case '*':
       case '/':
-      case 'C':
-      case '=':
-      setAllowDecimal(true)
-    }
-    switch(value){
+      case '-':  
+        if(allowOperator){
+          setDisplay(display + value)
+          setAllowOperator(false)
+        }
+      break
       case 'C':
         setDisplay('0')
-      break;
+      break
       case '=':
-        postfix(display)  
+        toPostfix(display)  
       // setDisplay('Calculating')
-      break;
+      break
       case '.':
         if(display.slice(-1) === '.' || !allowDecimal) return
         setAllowDecimal(false)
