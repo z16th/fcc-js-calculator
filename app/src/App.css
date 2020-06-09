@@ -27,6 +27,10 @@
   height: 100px;
 }
 
+.button:active{
+  color: rgba(255, 255, 255, 0.658);
+}
+
 .number{
   background-color: sandybrown;
 }

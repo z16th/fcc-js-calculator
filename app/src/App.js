@@ -99,41 +99,90 @@ function toPostfix(str){
 function App() {
   const [ display, setDisplay ] = React.useState('0')
   const [ allowDecimal, setAllowDecimal ] = React.useState(true)
-  const [ allowOperator, setAllowOperator ] = React.useState(true)
+  
+  const lastCharacter = () => {
+    return display[display.length-1]
+  }
 
-  function handleClick(value){
-    if( value === '0' && display === '0' ) return
-    if( value.match(/[+\-*/C=]/) ) setAllowDecimal(true)
-    if( value.match(/[0-9.]/) ) setAllowOperator(true)
-    if( value.match(/[+*/]/) && display[display.length-1].match(/[+*/-]/) ) return setDisplay(display.slice(0,-1) + value)
-    switch(value){
-      case '+':
-      case '*':
-      case '/':
-      case '-':  
-        if(allowOperator){
-          setDisplay(display + value)
-          setAllowOperator(false)
-        }
-      break
-      case 'C':
-        setDisplay('0')
-      break
-      case '=':
-        toPostfix(display)  
-      // setDisplay('Calculating')
-      break
-      case '.':
-        if(display.slice(-1) === '.' || !allowDecimal) return
+  const handleClick = (value) => {
+    if(value === '=') {
+      toPostfix(display)
+      setAllowDecimal(true)
+      return
+    }
+
+    if(value === 'C') {
+      setDisplay('0')
+      setAllowDecimal(true)
+      return
+    }
+
+    if(value.match([/[+\-*/]/])){
+      setAllowDecimal(true)
+    }
+
+    if(value === '.'){
+      if(allowDecimal){
+        setDisplay(display + value)
         setAllowDecimal(false)
-      //fall
-      default:
-        if(display === '0' && value !== '.') setDisplay(value)
-        else{
-          setDisplay(display + value)
-        }
+      }
+      return
+    }
+
+    if(display === '0'){
+      if( value.match(/[0-9]/)) return setDisplay(value)
+      if( value.match(/[+\-*/]/)) return
+      if( value === '.') return setDisplay('0.')
+    }
+
+    if(
+      value.match(/[0-9]/)
+      || (lastCharacter().match(/[0-9]/) && value.match(/[+\-*/]/)) 
+      || (value.match(/[-]/) && display.slice(-2).match(/(?<=[0-9])[*/]/))
+    )
+    {
+      setDisplay(display + value)
+    }else if(
+      (display.slice(-2).match(/(?<![*/])[+-]/) && value.match(/[+\-*/]/))
+      || (lastCharacter().match(/[+*/]/) && value.match(/[+*/]/))
+    ){
+      setDisplay(display.slice(0,-1) + value)
     }
   }
+
+  // function handleClick(value){
+  //   if( value === '0' && display === '0' ) return
+  //   if( value.match(/[+\-*/C=]/) ) setAllowDecimal(true)
+  //   if( value.match(/[0-9.]/) ) setAllowOperator(true)
+  //   if( value.match(/[+*/]/) && display[display.length-1].match(/[+*/-]/) ) return setDisplay(display.slice(0,-1) + value)
+  //   switch(value){
+  //     case '+':
+  //     case '*':
+  //     case '/':
+  //     case '-':  
+  //       if(allowOperator){
+  //         setDisplay(display + value)
+  //         setAllowOperator(false)
+  //       }
+  //     break
+  //     case 'C':
+  //       setDisplay('0')
+  //     break
+  //     case '=':
+  //       toPostfix(display)  
+  //     // setDisplay('Calculating')
+  //     break
+  //     case '.':
+  //       if(display.slice(-1) === '.' || !allowDecimal) return
+  //       setAllowDecimal(false)
+  //     //fall
+  //     default:
+  //       if(display === '0' && value !== '.') setDisplay(value)
+  //       else{
+  //         setDisplay(display + value)
+  //       }
+  //   }
+  // }
 
   return (
     <div className="App">
