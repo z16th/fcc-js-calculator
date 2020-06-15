@@ -120,7 +120,7 @@ function calculate(inputs){
     numbers.unshift(operations[operators.shift()](a,b))
     console.log('calculated numbers: '+ numbers)
   }
-  return numbers[0]
+  return numbers.toString()
 }
 
 function toArray(str){
