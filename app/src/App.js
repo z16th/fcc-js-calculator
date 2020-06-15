@@ -89,11 +89,46 @@ const buttons = [
   },
 ]
 
-function toPostfix(str){
+function calculate(inputs){
+  const operations = {
+    '+': (a,b) => (a + b),
+    '-': (a,b) => (a - b),
+    '*': (a,b) => (a * b),
+    '/': (a,b) => (a / b),
+  }
+
+  let numbers = []
+  let operators = []
+
+  inputs.forEach(element => {
+    if(element.match(/[0-9]$/)){
+      numbers.push(element)
+      console.log('numbers ' + numbers)
+    }else{
+      if(element === ''){
+        operators.pop()
+        return
+      }
+      operators.push(element)
+      console.log('operators ' + operators)
+    }
+  });
+
+  while(numbers.length > 1){
+    const a = Number(numbers.shift())
+    const b = Number(numbers.shift())
+    numbers.unshift(operations[operators.shift()](a,b))
+    console.log('calculated numbers: '+ numbers)
+  }
+  return numbers[0]
+}
+
+function toArray(str){
   const operatorRegex = /([+*/]|(?<![+*/])-)/
   let inputs = []
   inputs = str.split(operatorRegex)
   console.log(`Numbers: ${inputs}`)
+  return inputs;
 }
 
 function App() {
@@ -106,8 +141,11 @@ function App() {
 
   const handleClick = (value) => {
     if(value === '=') {
-      toPostfix(display)
+      const updatedValue = calculate(toArray(display))
+      setDisplay(updatedValue)
       setAllowDecimal(true)
+      console.log('display '+ display)
+      console.log(allowDecimal)
       return
     }
 
@@ -117,12 +155,13 @@ function App() {
       return
     }
 
-    if(value.match([/[+\-*/]/])){
+    if(value.match(/[+\-*/]/) && !allowDecimal){
       setAllowDecimal(true)
     }
 
     if(value === '.'){
-      if(allowDecimal){
+      console.log('point')
+      if(allowDecimal === true){
         setDisplay(display + value)
         setAllowDecimal(false)
       }
@@ -143,46 +182,12 @@ function App() {
     {
       setDisplay(display + value)
     }else if(
-      (display.slice(-2).match(/(?<![*/])[+-]/) && value.match(/[+\-*/]/))
+      (display.slice(-2).match(/[+-]/) && value.match(/[+\-*/]/))
       || (lastCharacter().match(/[+*/]/) && value.match(/[+*/]/))
     ){
       setDisplay(display.slice(0,-1) + value)
     }
   }
-
-  // function handleClick(value){
-  //   if( value === '0' && display === '0' ) return
-  //   if( value.match(/[+\-*/C=]/) ) setAllowDecimal(true)
-  //   if( value.match(/[0-9.]/) ) setAllowOperator(true)
-  //   if( value.match(/[+*/]/) && display[display.length-1].match(/[+*/-]/) ) return setDisplay(display.slice(0,-1) + value)
-  //   switch(value){
-  //     case '+':
-  //     case '*':
-  //     case '/':
-  //     case '-':  
-  //       if(allowOperator){
-  //         setDisplay(display + value)
-  //         setAllowOperator(false)
-  //       }
-  //     break
-  //     case 'C':
-  //       setDisplay('0')
-  //     break
-  //     case '=':
-  //       toPostfix(display)  
-  //     // setDisplay('Calculating')
-  //     break
-  //     case '.':
-  //       if(display.slice(-1) === '.' || !allowDecimal) return
-  //       setAllowDecimal(false)
-  //     //fall
-  //     default:
-  //       if(display === '0' && value !== '.') setDisplay(value)
-  //       else{
-  //         setDisplay(display + value)
-  //       }
-  //   }
-  // }
 
   return (
     <div className="App">
@@ -194,6 +199,7 @@ function App() {
           <div key={id} id={id} className={`button ${type}`} onClick={() => handleClick(value)}>{value}</div>
         ))}
       </div>
+
     </div>
   );
 }
