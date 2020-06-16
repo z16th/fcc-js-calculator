@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/fcc-js-calculator/static/css/main.aed1d6e6.chunk.css",
+    "main.js": "/fcc-js-calculator/static/js/main.193e87e3.chunk.js",
+    "main.js.map": "/fcc-js-calculator/static/js/main.193e87e3.chunk.js.map",
+    "runtime-main.js": "/fcc-js-calculator/static/js/runtime-main.bdc734ad.js",
+    "runtime-main.js.map": "/fcc-js-calculator/static/js/runtime-main.bdc734ad.js.map",
+    "static/js/2.a58e6fde.chunk.js": "/fcc-js-calculator/static/js/2.a58e6fde.chunk.js",
+    "static/js/2.a58e6fde.chunk.js.map": "/fcc-js-calculator/static/js/2.a58e6fde.chunk.js.map",
+    "index.html": "/fcc-js-calculator/index.html",
+    "precache-manifest.bc5e7f994a0681465b34e469551455e6.js": "/fcc-js-calculator/precache-manifest.bc5e7f994a0681465b34e469551455e6.js",
+    "service-worker.js": "/fcc-js-calculator/service-worker.js",
+    "static/css/main.aed1d6e6.chunk.css.map": "/fcc-js-calculator/static/css/main.aed1d6e6.chunk.css.map",
+    "static/js/2.a58e6fde.chunk.js.LICENSE.txt": "/fcc-js-calculator/static/js/2.a58e6fde.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/fcc-js-calculator/static/media/background.df967863.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bdc734ad.js",
+    "static/js/2.a58e6fde.chunk.js",
+    "static/css/main.aed1d6e6.chunk.css",
+    "static/js/main.193e87e3.chunk.js"
+  ]
+}
