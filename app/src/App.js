@@ -3,6 +3,26 @@ import './App.css';
 
 const buttons = [
   {
+    value: 'C',
+    id: 'clear',
+    type: 'ui'
+  },
+  {
+    value: '/',
+    id: 'divide',
+    type: 'operator'
+  },
+  {
+    value: '*',
+    id: 'multiply',
+    type: 'operator'
+  },
+  {
+    value: '-',
+    id: 'subtract',
+    type: 'operator'
+  },
+  {
     value: '0',
     id: 'zero',
     type: 'number'
@@ -57,35 +77,15 @@ const buttons = [
     id: 'add',
     type: 'operator'
   },
-  {
-    value: '-',
-    id: 'subtract',
-    type: 'operator'
-  },
-  {
-    value: '*',
-    id: 'multiply',
-    type: 'operator'
-  },
-  {
-    value: '/',
-    id: 'divide',
-    type: 'operator'
-  },
-  {
-    value: 'C',
-    id: 'clear',
-    type: 'ui'
-  },
+
   {
     value: '=',
-    id: 'equals',
-    type: 'operator'
+    id: 'equals'
   },
   {
     value: '.',
     id: 'decimal',
-    type: 'operator'
+    type: 'number'
   },
 ]
 
@@ -170,7 +170,7 @@ function App() {
 
     if(display === '0'){
       if( value.match(/[0-9]/)) return setDisplay(value)
-      if( value.match(/[+\-*/]/)) return
+      if( value.match(/[+*/]/)) return
       if( value === '.') return setDisplay('0.')
     }
 
@@ -191,15 +191,15 @@ function App() {
 
   return (
     <div className="App">
+      <div id='calculator'>
+        <div id='display'>{display}</div>
 
-      <div id='display'>{display}</div>
-
-      <div id='pad'>
-        {buttons.map( ({value, id, type}) => (
-          <div key={id} id={id} className={`button ${type}`} onClick={() => handleClick(value)}>{value}</div>
-        ))}
+        <div id='pad'>
+          {buttons.map( ({value, id, type}) => (
+            <div key={id} id={id} className={`button ${type} ${id}`} onClick={() => handleClick(value)}>{value}</div>
+          ))}
+        </div>
       </div>
-
     </div>
   );
 }

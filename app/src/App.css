@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
+
 .App{
   display: flex;
   flex-direction: column;
@@ -5,40 +7,93 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 4rem;
+  background-image: url(../src/utils/background.svg);
+  background-size: 256px;
+}
+
+#calculator{
+  width: 100%;
+  color: #ffffff;
+  background-color: #131515;
+  border-radius: 24px;
 }
 
 #display{
   width: 100%;
   text-align: right;
-  background-color: pink;
+  padding: 8px 20px 0 8px;
+  box-sizing: border-box;
 }
 
 #pad{
-  display: flex;
-  flex-wrap: wrap;
-  background-color: powderblue;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-areas: 
+    "clear divide multiply subtract"
+    "seven eight nine add"
+    "four five six add"
+    "one two three equals"
+    "zero zero decimal equals";
+  padding: 12px;
+  height: 80%;
+}
+.add{
+  grid-area: add;
+}
+.equals{
+  grid-area: equals;
+  color: #d2ac41;
+}
+.zero{
+  grid-area: zero;
 }
 
 .button{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
+  padding: 4px;  
+  margin: 4px;
+  border-radius: 24px;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.28);
+  background-color: #252928;
 }
 
 .button:active{
   color: rgba(255, 255, 255, 0.658);
 }
 
-.number{
-  background-color: sandybrown;
-}
-
 .operator{
-  background-color: seagreen;
+  color: #629da3;
 }
 
 .ui{
-  background-color: sienna;
+  color: #a75374;
+}
+
+@media (min-width: 416px){
+  .App{
+    width: 100%;
+    height: 100%;
+    background-size: 512px;
+  }
+  #calculator{
+    width: 50%;
+    height: 80%;
+  }
+  #display{
+    height: 18%;
+    font-size: clamp(100px, 1rem + 5vw, 8rem);
+  }
+
+  #pad{
+
+  }
+
+  .button{
+
+  }
 }
