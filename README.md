@@ -1,5 +1,5 @@
 # FCC - Calculator
-![project-image]()
+![project-image](https://z16th-bucket.s3-us-west-1.amazonaws.com/fcc-projects/fcc-js-calculator-min.png)
 
 You can check the live version [here](https://xvi-lolz.github.io/fcc-js-calculator/)
 
